@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>舆图演化 - 明清对比</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        :root {
+            --ancient-yellow: #f2e6c9;
+            --vermilion: #962218;
+            --gold: #b3935d;
+        }
+        body { 
+            background: var(--ancient-yellow); 
+            margin: 0; 
+            font-family: "STKaiti", "STSong", serif; 
+            overflow: hidden; 
+        }
+        /* 统一返回展厅样式 */
+        .nav-back { 
+            position: absolute; 
+            top: 20px; 
+            left: 20px; 
+            z-index: 10; 
+        }
+        .nav-back a { 
+            color: var(--vermilion); 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 18px;
+        }
+        
+        .header-section {
+            text-align: center;
+            padding-top: 25px; 
+        }
+        h2 { 
+            color: var(--vermilion); 
+            border-bottom: 2px solid var(--vermilion); 
+            display: inline-block; 
+            padding-bottom: 5px; 
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .chart-container { 
+            width: 94%; 
+            height: 82vh; 
+            margin: 25px auto; 
+            border: 2px solid var(--gold); 
+            padding: 10px; 
+            background: rgba(255,255,255,0.2); 
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-back"><a href="visualization.html">← 返回展厅</a></div>
+    
+    <div class="header-section">
+        <h2>明清人口与制图产出相关性分析</h2>
+    </div>
+
+    <div id="main" class="chart-container"></div>
+
+    <script>
+        var chart = echarts.init(document.getElementById('main'));
+        
+        // 立即执行配置，取消所有显式延迟加载动画
+        var option = {
+            backgroundColor: 'transparent',
+            // 优化动画时长，使入场更快
+            animation: true,
+            animationDuration: 1200, 
+            animationEasing: 'cubicOut',
+
+            tooltip: { 
+                trigger: 'axis',
+                backgroundColor: 'rgba(242, 230, 201, 0.9)',
+                borderColor: '#b3935d',
+                textStyle: { color: '#1a1a1a', fontFamily: 'STKaiti' },
+                borderWidth: 1,
+                transitionDuration: 0.4 
+            },
+            legend: { 
+                data: ['明代人口', '清代人口', '明地图数', '清地图数'], 
+                top: 5,
+                textStyle: { fontFamily: 'STKaiti', color: '#1a1a1a' }
+            },
+            grid: {
+                top: '12%',
+                left: '5%',
+                right: '5%',
+                bottom: '8%',
+                containLabel: true
+            },
+            xAxis: { 
+                type: 'category', 
+                data: ['江苏', '山东', '江西', '浙江', '福建', '安徽'],
+                axisLine: { lineStyle: { color: '#1a1a1a' } },
+                axisLabel: { fontFamily: 'STKaiti' }
+            },
+            yAxis: [
+                { 
+                    type: 'value', 
+                    name: '人口(万)', 
+                    position: 'left',
+                    nameTextStyle: { fontFamily: 'STKaiti', color: '#b3935d' },
+                    axisLine: { show: true, lineStyle: { color: '#b3935d' } },
+                    splitLine: { lineStyle: { type: 'dashed', color: '#d1c1a5' } },
+                    axisLabel: { fontFamily: 'STKaiti' }
+                },
+                { 
+                    type: 'value', 
+                    name: '地图数', 
+                    position: 'right',
+                    nameTextStyle: { fontFamily: 'STKaiti', color: '#962218' },
+                    axisLine: { show: true, lineStyle: { color: '#962218' } },
+                    splitLine: { show: false },
+                    axisLabel: { fontFamily: 'STKaiti' }
+                }
+            ],
+            series: [
+                { 
+                    name: '明代人口', 
+                    type: 'line', 
+                    smooth: true, 
+                    data: [1100, 950, 800, 900, 450, 600], 
+                    itemStyle: {color: '#b3935d'},
+                    lineStyle: { width: 3 },
+                    showSymbol: false,
+                    animationDuration: 1200
+                },
+                { 
+                    name: '清代人口', 
+                    type: 'line', 
+                    smooth: true, 
+                    data: [2500, 3800, 2400, 2600, 1500, 3200], 
+                    itemStyle: {color: '#962218'},
+                    lineStyle: { width: 3 },
+                    showSymbol: false,
+                    animationDuration: 1500 
+                },
+                { 
+                    name: '明地图数', 
+                    type: 'bar', 
+                    yAxisIndex: 1, 
+                    data: [25, 18, 20, 15, 12, 10], 
+                    itemStyle: {color: 'rgba(179,147,93,0.6)'},
+                    animationDuration: 1000,
+                    animationDelay: function (idx) {
+                        return idx * 50 + 400; // 缩短等待时间，400ms后即开始弹出
+                    }
+                },
+                { 
+                    name: '清地图数', 
+                    type: 'bar', 
+                    yAxisIndex: 1, 
+                    data: [72, 95, 91, 67, 63, 46], 
+                    itemStyle: {color: 'rgba(150,34,24,0.6)'},
+                    animationDuration: 1000,
+                    animationDelay: function (idx) {
+                        return idx * 50 + 600; // 在明代数据弹出后紧接着弹出
+                    }
+                }
+            ]
+        };
+
+        // 直接设置配置项，实现秒开
+        chart.setOption(option);
+
+        window.onresize = function() {
+            chart.resize();
+        };
+    </script>
+</body>
+</html>
