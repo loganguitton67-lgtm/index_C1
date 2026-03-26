@@ -6,8 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
         :root {
-            --ancient-yellow: #f2e6c9;
-            --vermilion: #962218;
+            --ancient-yellow: #EDE0CA;
+            --vermilion: #62B8B8;
             --gold: #b3935d;
         }
         body { 
@@ -97,7 +97,7 @@
             xAxis: { 
                 type: 'category', 
                 data: ['江苏', '山东', '江西', '浙江', '福建', '安徽'],
-                axisLine: { lineStyle: { color: '#1a1a1a' } },
+                axisLine: { lineStyle: { color: '#5D5149' } },
                 axisLabel: { fontFamily: 'STKaiti' }
             },
             yAxis: [
@@ -114,8 +114,8 @@
                     type: 'value', 
                     name: '地图数', 
                     position: 'right',
-                    nameTextStyle: { fontFamily: 'STKaiti', color: '#962218' },
-                    axisLine: { show: true, lineStyle: { color: '#962218' } },
+                    nameTextStyle: { fontFamily: 'STKaiti', color: '#62B8B8' },
+                    axisLine: { show: true, lineStyle: { color: '#62B8B8' } },
                     splitLine: { show: false },
                     axisLabel: { fontFamily: 'STKaiti' }
                 }
@@ -126,7 +126,7 @@
                     type: 'line', 
                     smooth: true, 
                     data: [1100, 950, 800, 900, 450, 600], 
-                    itemStyle: {color: '#b3935d'},
+                    itemStyle: {color: 'rgba(179,147,93,0.6)'},
                     lineStyle: { width: 3 },
                     showSymbol: false,
                     animationDuration: 1200
@@ -136,7 +136,7 @@
                     type: 'line', 
                     smooth: true, 
                     data: [2500, 3800, 2400, 2600, 1500, 3200], 
-                    itemStyle: {color: '#962218'},
+                    itemStyle: {color: '#62B8B8'},
                     lineStyle: { width: 3 },
                     showSymbol: false,
                     animationDuration: 1500 
@@ -146,7 +146,7 @@
                     type: 'bar', 
                     yAxisIndex: 1, 
                     data: [25, 18, 20, 15, 12, 10], 
-                    itemStyle: {color: 'rgba(179,147,93,0.6)'},
+                    itemStyle: {color: 'rgba(179,147,93,0.4)'},
                     animationDuration: 1000,
                     animationDelay: function (idx) {
                         return idx * 50 + 400; // 缩短等待时间，400ms后即开始弹出
@@ -157,7 +157,7 @@
                     type: 'bar', 
                     yAxisIndex: 1, 
                     data: [72, 95, 91, 67, 63, 46], 
-                    itemStyle: {color: 'rgba(150,34,24,0.6)'},
+                    itemStyle: {color: #62B8B8'},
                     animationDuration: 1000,
                     animationDelay: function (idx) {
                         return idx * 50 + 600; // 在明代数据弹出后紧接着弹出
